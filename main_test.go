@@ -43,13 +43,38 @@ func Test_listFiles(t *testing.T) {
 			},
 		},
 		{
-			name: "only .txt files",
+			name: "only txt files",
 			args: args{
 				gitignore: "*.bin\n",
 			},
 			want: []string{
 				mainTextFile.Name(), subTextFile.Name(),
 			},
+		},
+		{
+			name: "only bin files",
+			args: args{
+				gitignore: "*.txt\n",
+			},
+			want: []string{
+				mainBinFile.Name(), subBinFile.Name(),
+			},
+		},
+		{
+			name: "only files not in sub",
+			args: args{
+				gitignore: "sub/*\n",
+			},
+			want: []string{
+				mainTextFile.Name(), mainBinFile.Name(),
+			},
+		},
+		{
+			name: "no files",
+			args: args{
+				gitignore: "**/*\n",
+			},
+			want: []string{},
 		},
 	}
 
