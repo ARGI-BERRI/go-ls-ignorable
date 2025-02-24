@@ -61,7 +61,7 @@ func listFiles(gitignorePath string, walkDir string) ([]string, error) {
 
 	var files []string
 
-	filepath.Walk(walkDir, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(walkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -76,6 +76,10 @@ func listFiles(gitignorePath string, walkDir string) ([]string, error) {
 
 		return nil
 	})
+
+	if err != nil {
+		return nil, err
+	}
 
 	return files, err
 }
